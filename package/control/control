@@ -1,0 +1,10 @@
+Package: wiperam
+Source: wiperam
+Version: 0.1
+Architecture: all
+Maintainer: ono-sendai
+Installed-Size: 64
+Depends: secure-delete, kexec-tools, memlockd
+Section: extra
+Priority: optional
+Description:  Memory erasure (https://tails.boum.org/contribute/design/memory_erasure/)

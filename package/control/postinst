@@ -1,0 +1,54 @@
+#!/bin/sh
+
+set -e
+
+#the kexec-load initscript, that normally only runs at reboot time, is enabled to run at shutdown time as well
+# https://git-tails.immerda.ch/tails/plain/config/chroot_local-patches/run_kexec-load_on_halt.diff
+
+sed -i 's/6/0 6/' /etc/init.d/kexec-load
+
+#configure memlockd
+
+cat >/etc/memlockd.cfg <<EOL
++/bin/cat
++/bin/chvt
++/bin/sh
++/bin/sleep
++/bin/stty
+/etc/default/locale
+/etc/init.d/kexec-load
+/etc/init.d/tails-kexec
++/sbin/kexec
++/usr/bin/eject
++/usr/bin/pkill
+EOL
+
+#configure init scripts
+
+CUSTOM_INITSCRIPTS="
+tails-kexec
+tails-reconfigure-kexec
+tails-reconfigure-memlockd
+"
+
+PATCHED_INITSCRIPTS="
+kexec
+kexec-load
+memlockd
+"
+
+# The patches to adjust the runlevels are applied to the chroot
+# after the packages have been installed. So we need to remove them first,
+# to re-install them with our settings.
+insserv -r $PATCHED_INITSCRIPTS
+
+# Re-install overriden initscripts and install our custom ones.
+insserv $PATCHED_INITSCRIPTS $CUSTOM_INITSCRIPTS
+
+#divert custom memlockd.cfg
+
+dpkg-divert --add --package wiperam --rename --divert /etc/memlockd.cfg.fake /etc/memlockd.cfg
+
+#divert custom kexec-load
+
+dpkg-divert --add --rename --package wiperam --divert /etc/init.d/kexec-load.fake /etc/init.d/kexec-load

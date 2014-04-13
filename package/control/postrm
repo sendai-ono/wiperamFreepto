@@ -1,0 +1,8 @@
+#!/bin/sh
+#restore default configurations
+
+sed -i 's/0 6/6/' /etc/init.d/kexec-load
+
+dpkg-divert --remove --package wiperam --rename /etc/memlockd.cfg
+
+dpkg-divert --remove /etc/init.d/kexec-load

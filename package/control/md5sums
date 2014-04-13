@@ -1,0 +1,8 @@
+b32786641ce9f5487650a6398fcbccb6  /etc/default/kexec
+be7d2ac630943c97bb4352c982d67e5a  /etc/init.d/tails-reconfigure-memlockd
+c417f4a36a5d077c0f9e24b596212b77  /etc/init.d/tails-reconfigure-kexec
+68dd05fa570c2377fbca937db09522e0  /etc/init.d/tails-kexec
+0ccb63dab1b1701be36d3ad9db41009d  /usr/share/initramfs-tools/scripts/init-premount/sdmem
+72bf37ff298ea5415afbd54142efcf6e  /usr/share/initramfs-tools/hooks/sdmem
+5ee57492b4d01ec48600cf2e13f87c67  /usr/local/bin/tails-get-bootinfo
+c88c8783d1a0e70f33229433e94fd85d  /usr/local/bin/tails-boot-to-kexec
